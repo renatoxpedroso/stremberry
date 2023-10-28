@@ -1,0 +1,24 @@
+.campo-verde {
+    background-color: green !important;
+    color: white !important;
+}
+
+.campo-verde-fraco {
+    background-color: limegreen !important;
+    color: white !important;
+}
+
+.campo-amarelo {
+    background-color: yellow !important;
+    color: black !important;
+}
+
+.campo-laranja {
+    background-color: darkorange !important;
+    color: black !important;
+}
+
+.campo-vermelho {
+    background-color: red !important;
+    color: white !important;
+}

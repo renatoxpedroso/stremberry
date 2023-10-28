@@ -1,0 +1,145 @@
+﻿@model Streamberry.Models.FilmeModel
+
+@{
+    ViewData["Title"] = "Cadastro de Filme";
+}
+
+@section Scripts {
+    <script src="~/js/filme/cadastro.js"></script>
+}
+
+@section Breadcomb {
+    <div class="col-md-10 page-title d-flex flex-column justify-content-center flex-wrap me-3">
+        @if (Model.Id != Guid.Empty)
+        {
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Editar Filme</h1>
+        }
+        else
+        {
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Cadastrar Filme</h1>
+        }
+
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <li class="breadcrumb-item text-muted">
+                <a href="/Filme" class="text-muted text-hover-primary">Filmes</a>
+            </li>
+            @if (Model.Id != Guid.Empty)
+            {
+                <li class="breadcrumb-item text-muted">Editar</li>
+            }
+            else
+            {
+                <li class="breadcrumb-item text-muted">Adicionar</li>
+            }
+        </ul>
+    </div>
+}
+<hr />
+
+<div class="d-flex flex-column gap-7 gap-lg-10">
+    <div class="card card-flush">
+        <div class="card-header border-0 pt-6">
+            <div class="flex-row-fluid gap-5" data-kt-docs-table-toolbar="base">
+                <div class="form-group row">
+
+                    <form asp-action="Gravar">
+                        <input type="hidden" asp-for="Id" id="Id" />
+                        <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                            <div class="d-flex flex-column gap-7 gap-lg-10">
+                                <div class="card card-flush">
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="campoCadastro form-group">
+                                        <label asp-for="Titulo" class="control-label"></label>
+                                        <input asp-for="Titulo" class="form-control" />
+                                        <span asp-validation-for="Titulo" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="campoCadastro form-group">
+                                        <label asp-for="Ano" class="control-label"></label>
+                                        <input type="number" asp-for="Ano" class="form-control" min="1900" max="2100" step="1" maxlength="4">
+                                        <span asp-validation-for="Ano" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="campoCadastro form-group">
+                                        <label asp-for="IdGenero" class="control-label"></label>
+
+                                        <select asp-for="IdGenero" class="form-control">
+                                            @if (ViewBag.Genero != null)
+                                            {
+                                                foreach (var genero in ViewBag.Genero)
+                                                {
+
+                                                    if (Model.IdGenero != Guid.Empty)
+                                                    {
+                                                        if (Model.IdGenero.ToString() == genero.Value)
+                                                        {
+                                                            <option value="@genero.Value" selected>@genero.Text</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@genero.Value">@genero.Text</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@genero.Value">@genero.Text</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="campoCadastro form-group">
+                                        <label class="control-label">Streamings</label>
+
+                                        <select name="streamingIds" class="form-select form-select-solid" data-control="select2" data-close-on-select="false" data-placeholder="Selecione a Streaming" data-allow-clear="true" multiple="multiple">
+                                            <option></option>
+                                            @if (ViewBag.Streming != null)
+                                            {
+                                                if (ViewBag.Vinculos.Count > 0)
+                                                {
+                                                    foreach (var streaming in ViewBag.Streming)
+                                                    {
+                                                        foreach (var vinculo in ViewBag.Vinculos)
+                                                        {
+
+                                                            if (vinculo.Streaming.ToString() == streaming.Value)
+                                                            {
+                                                                <option value="@streaming.Value" selected>@streaming.Text</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@streaming.Value">@streaming.Text</option>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foreach (var streaming in ViewBag.Streming)
+                                                    {
+                                                        <option value="@streaming.Value">@streaming.Text</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+             
+                                </div>
+                            </div>
+                            <div class="containerCadastro d-flex justify-content-end">
+                                <button type="reset" class="btn btn-light btn-active-light-primary me-2" onclick="location.href='/Filme'">Cancelar</button>
+                                <button type="submit" id="submit" class="btn btn-primary">
+                                    <span class="indicator-label">Salvar</span>
+                                </button>
+                            </div>
+                        </div>
+                        </br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

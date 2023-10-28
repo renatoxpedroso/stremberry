@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Streamberry.Models.UsuarioModel>
+
+@{
+    ViewData["Title"] = "Usuários";
+}
+
+@section Scripts {
+    <script src="~/js/usuario/index.js"></script>
+}
+
+@section Breadcomb {
+    <div class="col-md-10 page-title d-flex flex-column justify-content-center flex-wrap me-3">
+        <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Usuários</h1>
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <li class="breadcrumb-item text-muted">
+                <a href="/Streamings/Index" class="text-muted text-hover-primary">Início</a>
+            </li>
+            <li class="breadcrumb-item text-muted">Usuários</li>
+        </ul>
+    </div>
+
+    <div class="containerNovo col-md-2">
+        <a href="/Usuario/Cadastro" class="buttonNovoCadastro btn fw-bold btn-primary" data-bs-toggle="tooltip" title="Cadastrar Novo Usuario">Cadastrar Novo Usuário</a>
+    </div>
+}
+
+<div class="d-flex flex-column gap-7 gap-lg-10">
+    <div class="card card-flush">
+        <div class="card-header border-0 pt-6">
+            <div class="flex-row-fluid gap-5" data-kt-docs-table-toolbar="base">
+                <div class="form-group row">
+
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label">Nome</label>
+                        <input id="nome" value="" class="form-control mb-md-0 input-inteiro" placeholder="Nome" maxlength="150" />
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label">E-mail</label>
+                        <input id="email" value="" class="form-control mb-md-0 input-inteiro" placeholder="E-mail" maxlength="150" />
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="container">
+                            <button type="button" class="btn btn-primary float-end mt-8 w-49" data-bs-toggle="tooltip" title="Filtrar" data-kt-docs-table-filter="filter">
+                                <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                Pesquisar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            @Html.AntiForgeryToken()
+            <table id="datatable" class="table align-middle table-row-dashed fs-6 gy-5">
+                <thead>
+                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th class="w-10px pe-2" width="0%">
+                        </th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Perfil</th>
+                        <th class="align-right"></th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-semibold"></tbody>
+            </table>
+        </div>
+
+        @*<div class="card-body">
+            @Html.AntiForgeryToken()
+            <table id="datatable" class="table align-middle table-row-dashed fs-6 gy-5">
+                <thead>
+                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th class="align-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td class="align-right">
+       
+                                <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 btn-acao-editar">
+                                    <span class="svg-icon svg-icon-3">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.8477 1.87868C19.6761 0.707109 17.7766 0.707105 16.605 1.87868L2.44744 16.0363C2.02864 16.4551 1.74317 16.9885 1.62702 17.5692L1.03995 20.5046C0.760062 21.904 1.9939 23.1379 3.39334 22.858L6.32868 22.2709C6.90945 22.1548 7.44285 21.8693 7.86165 21.4505L22.0192 7.29289C23.1908 6.12132 23.1908 4.22183 22.0192 3.05025L20.8477 1.87868ZM18.0192 3.29289C18.4098 2.90237 19.0429 2.90237 19.4335 3.29289L20.605 4.46447C20.9956 4.85499 20.9956 5.48815 20.605 5.87868L17.9334 8.55027L15.3477 5.96448L18.0192 3.29289ZM13.9334 7.3787L3.86165 17.4505C3.72205 17.5901 3.6269 17.7679 3.58818 17.9615L3.00111 20.8968L5.93645 20.3097C6.13004 20.271 6.30784 20.1759 6.44744 20.0363L16.5192 9.96448L13.9334 7.3787Z" fill="#0F0F0F" />
+                                        </svg>
+                                    </span>
+                                </a>
+
+                                <a asp-action="Deletar" asp-route-id="@item.Id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm btn-acao-excluir">
+                                    <span class="svg-icon svg-icon-3">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M10 11V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M14 11V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M4 7H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>*@
+    </div>
+</div>
